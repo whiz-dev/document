@@ -1,0 +1,114 @@
+##요청처리
+@Controller
+@GetMapping("url") (해당 url 요청을 받아 연결페이지를 리턴한다)
+   @RequestParam (클라이언트에서 넘어온 Get 파라미터)
+   Model (연결페이지에 넘겨줄 데이터 셋팅)
+@ResponseBody (해당 url 요청을 받아 ResponseBody에 리턴값을 셋팅한다. 객체 리턴의 경우 Json으로 컨버팅하는게 기본설정임)
+
+##테스트
+@Test
+@DisplayName
+
+##컴포넌트 스캔
+@Component
+   @Controller
+   @Service
+   @Repository
+
+##의존성 주입
+@Autowired (스프링 컴포넌트에서만 작동)
+
+##스프링 빈
+@Bean
+
+##외부 요청 연결순서
+Controller -> Static 리소스
+
+##테스트
+@SpringBootTest (스프링 컨테이너와 테스트를 함께 실행한다)
+@Transactional (테스트 완료 후 자동 롤백처리)
+@Commit (자동 롤백처리 안함)
+
+##JdbcTemplate
+JdbcTemplate 클래스
+
+##JPA (Java Persistant API)
+Java ORM (Object Relational Mapping) 표준
+hibernate 사 에서 구현한 라이브러리를 주로 사용
+@Entity
+@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Column
+EntityManager
+   persist (Insert)
+   find (select by key)
+   createQuery (select by any)
+
+##Spring Data JPA
+JPA 기술을 랩핑
+JpaRepository 인터페이스만 정의해 놓으면 컴포넌트 등록없이 자동주입
+인터페이스 이름을 파싱하여 내부적으로 매서드 자동생성
+
+##AOP
+Proxy 개체를 생성하여 의존성 주입.
+@Aspect (AOP 매서드임을 명시)
+@Around (적용 범위 설정)
+ProceedingJoinPoint.proceed (실제 매서드 호출)
+
+##DI 컨테이너 생성
+@Configuration
+@Bean
+스프링 컨테이너 : ApplicationContext
+스프링 빈 : 스프링 컨테이너가 @Configuration 클래스에 있는 @Bean 매서드를 호출해서 생성되는 객체
+ApplicationContext applicationContext = new AnnotationConfigApplicationContext();
+.getBean(); (해당 빈 객체 불러오기)
+.getBeanDefinitionNames(); (빈 객체 이름목록 가져오기)
+.getBeanDefinition().getRole(); (해당 빈 역할 객체 가져오기)
+BeanDefinition.ROLE_APPLICATION : 직접 등록한 어플리케이션 빈
+BeanDefinition.ROLE_INFRASTRUCTURE : 스프링 내부에서 사용하는 빈
+
+##컴포넌트 스캔과 의존관계 자동 주입
+@Configuration (수동으로 스프링 빈 등록)
+@ComponentScan (자동으로 스프링 빈 등록, @SpringBootApplication은 @ComponentScan을 포함한다.)
+@Component (컴포넌트 스캔 대상)
+@Autowired (자동 DI 대상)
+
+##스프링 컨테이너 작동원리
+1. 스프링 컨테이너 생성 (ApplicationContext)
+2. 스프링 빈 생성 (@ComponentScan -> @Configuration 순서)
+3. 의존성 주입 매서드 호출 (@Autowired). 단 생성자 Autowired는 2번에서 실행
+4. 초기화 콜백
+5. 사용
+6. 소멸전 콜백
+7. 스프링 종료
+
+##lombok 라이브러리
+1 + 2 로 DI 생성자를 생략할 수 있음
+1. @RequiredArgsConstructor (final 필드를 받아주는 생성자 자동 생성)
+2. 생성자가 1개인 경우 @Autowired 어노테이션 생략가능함.
+
+##조회 빈이 2개 이상인 경우
+@Autowired 주입 순서
+1.타입이 일치하는 스프링 빈을 찾는다.
+2.타입이 일치하는 객체가 두개 이상을 경우 필드명 or 파라미터명으로 빈 이름 매칭
+@Qualifier
+DI 필드나 파라미터에 해당 어노테이션 사용 시 동일한 Qualifier를 가진 스프링 빈을 매칭
+문자열로 지정하므로 문자오류시 컴파일 타임에 못찾음 -> @Qualifier 상속받는 사용자 어노테이션 작성하여 해결 (어노테이션 상속은 스프링 제공 기능)
+@Primary
+최우선 순위로 매칭
+
+##스프링 빈 생명주기 콜백
+1. 인터페이스 : InitializingBean, DisposableBean
+2. 매서드 지정 : @Bean(initMethod, destroyMethod) -> 코드를 수정할 수 없는 외부 라이브러리 초기화, 종료 사용 필요시
+3. Annotation : @PostConstructor, PreDestroy -> 메인으로 사용되는 방식
+
+##빈 스코프
+1. Singletone : 기본값
+2.  prototype : 빈 조회시 마다 새로운 객체 반환 (스프링 컨테이너에서 PostConstructor 까지만 관리함)
+
+
+
+
+
+
+
+

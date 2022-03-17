@@ -1,0 +1,15 @@
+## 프로젝트 생성
+Java 11
+War
+Dependency : Spring Web, Lombok
+
+## Intellij 환경설정
+Gradle Build -> Intellij Build (무료 버전일 경우 Gradle Build 사용)
+Lombok 플러그인 설치, Annotation Processor 활성화
+콘솔 한글깨짐 : shift+shift => custom vmoption => -Dfile.encoding=UTF-8 추가
+gradle 빌드시 한글깨짐 : settings => file encoding => UTF-8 선택
+요청 로그 자동 기록 : application.properties => logging.level.org.apache.coyote.http11=debug
+
+## Servlet 작성
+@ServletComponentScan (해당 어노테이션 적용된 클래스의 패키지 하위에 있는 모든 서블릿 객체를 생셩)
+@WebServlet (서블릿 컨테이너에 로드됨)

@@ -1,0 +1,327 @@
+##ens160파일 변경사항 적용
+systemctl restart NetworkManager
+
+##변경사항 네트워크 반영
+nmcli networking off
+nmcli networking on
+
+##루트 사용자 로그인 금지
+gedit /etc/pam.d/gdm-password
+auth   required   pam_succeed_if.so user != root quiet
+
+##한글 키포드 설치
+yum -y install ibus-hangul
+shift + space (한영 전환)
+
+##콘솔 출력 전체 삭제
+clear
+
+##에디터
+gedit (x-window 환경)
+vi
+ex 모드
+:w (저장)
+:q (종료)
+:q! (변경내용 저장없이 종료)
+:ivi  (취소)
+:wq (저장하고 종료)
+:set number (라인숫자 표시)
+명령모드
+i (커서 위치부터 편집 시작)
+a (커서 다음 칸부터 편집 시작)
+gg (제일 첫 행으로 이동)
+G (제일 끝 행으로 이동)
+숫자 + G (해당 라인으로 이동)
+yy (현재 행 복사)
+숫자 + yy (현재 행부터 숫자 만큼의 행 복사)
+p (현재 행 다음에 붙여 넣기)
+P (현재 행 이전에 붙여 넣기)
+/문자열 + Ent (문자열 찾기)
+n (찾은 문자열 중 다음으로 이동)
+
+##명령어 도움말
+man <명령어> (도움말 실행)
+/검색어 + Ent (검색)
+n (검색된 목록 다음으로 이동)
+q (종료)
+
+##리부팅
+reboot
+shutdown -r now
+
+##종료
+halt -p
+shutdown -P now
+
+##종료 스케줄
+shutdown -P +10
+shutdown -P 22:00
+shutdown -k +15 (실제 종료하지는 않고 로그인되 사용자에게 15분후 종료된다는 메시지만 보냄)
+
+##종료 스케줄 취소
+shutdown -c
+
+##로그인
+su - <사용자명> (해당사용자로 로그인, exit 명령 시 다시 원래 사용자 세션으로 돌아감)
+
+##로그아웃
+logout
+exit
+
+##런레벨 확인
+ls -l /etc/systemd/system/default.target
+
+##런레벨 변경
+ln -sf /lib/systemd/system/graphical.target /etc/systemd/system/default.target
+ln -sf /lib/systemd/system/multi-user.target /etc/systemd/system/default.target
+
+##x윈도 모드 실행
+startx
+
+##실행된 명령어 History
+history
+history -c (삭제)
+
+##마운트
+/dev/sr0 (CD/DVD 디바이스)
+/dev/cdrom(CD/DVD 디바이스 링크파일)
+/dev/sdb1 (USB 디바이스, 시스템별로 바뀔수 있음)
+mount (마운트 정보 확인)
+mount <디바이스 경로> <마운트 경로> (마운트)
+mount -o loop <iso 파일 경로> <마운트 경로> (iso파일 마운트)
+umount <디바이스 경로> (마운트 해제)
+x-window 모드에서는 디바이스 삽입 시 자동으로 마운트
+
+##iso
+genisoimage -r -J -o <iso 파일 경로> <대상 파일 or 디렉토리 경로> (iso 이미지 생성, genisoimage 패키지)
+cdrecord (CD 굽기, wodim 패키지)
+growisofs (DVD 굽기, dvd+rw-tools 패키지)
+
+##파일, 디렉토리
+mkdir <디렉토리 경로> (디렉토리 생성)
+mkdir -p (부모 디렉토리 존재하지 않을 시 자동 생성)
+cp <source 파일, 디렉토리 경로> <target 디렉토리 경로> (파일, 디렉토리 복사)
+cp -r (디렉토리 복사)
+ls (파일목록 보기)
+ls -a (숨김 파일 포함하여 보기)
+ls -l (상세보기)
+rm (파일 삭제)
+rm -f (삭제시 확인과정 없이 삭제)
+rm -r (디렉토리 삭제)
+rm -rf (옵션 r+f)
+cat (파일내용 출력)
+cd (현재 사용자의 홈 디렉토리로 이동)
+cd ~<사용자명> (해당 사용자의 홈 디렉토리로 이동)
+cd <경로> (해당 경로로 이동)
+pwd (현재 위치를 보여줌)
+mv <source> <target> (파일이나 디렉토리의 이름을 변경하거나 다른 디렉토리로 이동)
+rmdir <디렉토리 경로> (비어있는 디렉토리 삭제)
+head, tail <파일명> (해당 파일의 앞 뒤 10행만 보여준다)
+head, tail -3 (3행만 보여준다)
+touch <파일명> (해당 파일을 새로 만들거나 존재할 시 최종 수정시간을 현재로 변경한다)
+less <파일명> (텍스트 형식의 파일을 페이지 단위로 보여준다) q:종료, space or PageDown:다음페이지, b or PageUp:이전페이지
+file <파일명> (파일이 어떤 종류인지 알려준다)
+
+##가상메모리
+dd if=/dev/zero of=/swapfile bs=1024 count=4194304 (4GB 가상 메모리 파일 생성
+mkswap /swapfile (파일을 가상 메모리로 포맷)
+swapon /swapfile (가상 메모리 활성화)
+swapon -s (가상 메모리 용량 확인)
+/etc/rc.d/rc.local 파일에 swapon /swapfile 추가 (시스템 기동 시 자동으로 해당 파일 가상 메모리로 활성화)
+
+##사용자 관리
+yum install cockpit (시스템 관리콘솔, CentOS 7 system-config-* 도구 대체)
+/etc/passwd (사용자목록 관리 파일)
+/etc/group (그룹목록 관리 파일)
+/etc/shadow (사용자 암호 관리 파일)
+/etc/skel (신규 사용자 생성 시 해당 폴더의 파일이 사용자 홈 디렉토리로 복사됨)
+~<사용자명> (해당 사용자의 홈 디렉토리와 동일한 의미)
+users, whoami (현재 접속한 사용자명 확인)
+useradd <사용자명> (사용자 추가)
+ -u <사용자 ID>
+ -g <사용자 Group명>
+ -d <홈 디렉토리>
+ -s <기본 쉘>
+passwd <사용자명> (비밀번호 지정하거나 변경)
+usermod [useradd 옵션] <사용자명> (사용자 정보 수정)
+userdel <사용자명> (사용자 삭제)
+ -r (해당 사용자 홈 디렉토리까지 삭제)
+chage
+ -l <사용자명> (암호정책 확인)
+ -m 2 <사용자명> (암호 최소 사용일)
+ -M 30 <사용자명> (암호 최대 사용일)
+ -E 2020/01/01 <사용자명> (암호 만료일)
+ -W 10 <사용자명> (만료전 경고 시작일)
+groups (현재 사용자의 그룹정보 확인)
+groups <사용자명> (해당 사용자의 그룹정보 확인)
+groupadd <그룹명> (신규 그룹 추가)
+ -g <그룹 ID>
+groupmod -n <이전그룹명> <신규그룹명> (그룹명 변경)
+groupdel <그룹명> (그룹삭제)
+gpasswd <그룹명> (그룹의 암호 지정)
+ -A <유저명> (해당 유저를 그룹 관리자로 지정)
+ -a <유저명> <그룹명> (해당유저를 그룹에 추가)
+ -d <유저명> <그룹명> (해당유저를 그룹에서 삭제)
+
+##파일, 디렉토리 권한 관리
+chmod 777 <파일명> (해당 파일에 r w x 권한을 소유자, 그룹, 다른 사용자에게 부여)
+chown <사용자명> <파일명> (해당파일의 소유자를 변경)
+chgrp <그룹명> <파일명> (해당파일의 소유그룹을 변경
+
+##링크
+ln <원본파일> <링크파일> (링크파일 생성)
+ -s (소프트링크 생성)
+하드링크 : 원본파일이 저장된 데이터에 대한 포인터 (원본파일 위치가 바뀌어도 실행됨)
+소프트링크 : 원본파일에 대한 포인터 (원본파일 위치가 바뀌면 실행안됨)
+
+##프로그램 설치 (rpm)
+rpm -qa <패키지명> (패키지 설치여부 확인)
+rpm -ql <패키지명> (해당 패키지에 포함된 파일 목록)
+rpm -qlp <패키지명.rpm> (설치되지 않은 패키지에 포함된 파일 목록)
+rpm -qi <패키지명> (설치된 패키지의 상세 정보)
+rpm -qip <패키지명.rpm> (설치되지 않은 패키지의 상세 정보)
+rpm -qf <파일 절대경로> (해당 파일이 어느 패키지에 포함된 파일인지 확인)
+rpm -Uvh <패키지명.rpm> (패키지 설치 or 업데이트)
+ -v (설치 과정 확인)
+ -h (설치 진행 과정을 '#' 기호로 화면에 출력)
+rpm -e <패키지명> (패키지 삭제)
+
+##프로그램 설치 (yum)
+/etc/yum.repos.d/ (원격 리파지토리 URL 저장)
+yum -y install <패키지명> (패키지 설치, 설치여부 y/n 중 y 자동 선택, 이미 설치된 패키지는 업데이트)
+ --nogpgcheck (gpg 키 검사 생략)
+yum localinstall <패키지명.rpm> (의존성 패키지 자동 다운로드 및 설치)
+yum check-update (시스템에 설치된 패키지 중에서 업데이트 가능한 목록 보기)
+yum remove <패키지명> (설치된 패키지 삭제)
+yum info <패키지명> (패키지의 요약 정보를 보여준다)
+yum list all (CentOS에서 제공하는 패키지 전체 목록)
+yum list httpd* (httpd로 시작하는 전체 목록)
+yum clean all (.repo 파일 최신화)
+yum grouplist (패키지 그룹 목록 보기)
+yum groupinstall <패키지 그룹 명> (패키지 그룹 설치)
+
+##파일 압축
+
+
+##파이프, 필터, 리다이렉션
+파이프 : 두개의 프로그램을 연결해주는 통로 ( | 기호를 사용)
+ps -ef | grep aaa (aaa라는 글자가 들어가는 프로세스만 출력)
+ls -l > test.txt (test.txt 파일에 해당 내용 출력, 파일 덮어씀)
+ls -l >> test.txt (test.txt 파일에 해당 내용 출력, 파일 이어씀)
+sort < test.txt (test.txt 파일내용을 정렬해서 출력)
+sort < test.txt > test1.txt (test.txt 파일내용을 정렬해서 test1.txt 파일에 씀)
+
+##프로세스
+ps -ef (전체 프로세스 목록 보기)
+kill -9 <프로세스 번호> (해당 프로세스 강제 종료)
+ctrl + c (현재 포어그라운드 프로세스 종료)
+ctrl + z (현재 포어그라운드 프로세스 중지)
+jobs (실행중인 작업 목록)
+bg <job 번호> (해당 job을 백그라운드로 변경)
+fg <job 번호> (해당 job을 포어그라운드로 변경)
+명령어 + & (해당 명령어를 백그라운드로 실행)
+pstree <프로세스 번호> (프로세스 부모, 자식 트리구조 표시)
+
+##서비스와 소켓
+서비스 : 항상 기동
+소켓 : 외부에서 요청이 있을경우 기동되고 요청이 끝나면 중지
+/usr/lib/systemd/system/*.service (서비스 실행 스크립트)
+/usr/lib/systemd/system/*.socket (소켓 실행 스크립트)
+systemctl start/stop/restart <서비스명> (서비스 실행/중지재기동)
+systemctl status <서비스명> (서비스 현재 상태 보기)
+systemctl enable/disable <서비스명> (서비스 활성화/비활성화)
+systemctl list-unit-files (전체 서비스 상태 확인)
+
+##텔넷서버
+yum -y install telnet-server (텔넷서버 설치)
+yum -y install telnet (텔넷클라이언트 설치)
+systemctl <start, stop, restart> telnet.socket (서비스 시작, 중지, 재시작)
+systemctl status telnet.socket (서비스 상태 확인)
+systemctl enable telnet.socket (서버 기동 시 서비스 자동 시작)
+telnet 기본포트 : 23
+firewall-config (x-window로 23번 포트 열기)
+firewall-cmd --permanent --add-service=telnet
+firewall-cmd --permanent --add-port=23/tcp
+firewall-cmd --reload
+telnet <서버 ip> (텔넷 접속)
+
+##OpenSSH
+CentOS에 기본 설치되어 있음
+ssh 기본포트 : 22
+yum -y install openssh-server
+systemctl status sshd
+
+##VNC서버 (리눅스 x-window -> 리눅스 x-window)
+yum -y install tigervnc-server (vnc서버 설치)
+su - jhpark, vncpasswd (원격접속할 유저로 접속 후 vnc 비밀번호 생성)
+vncserver (서버 시작)
+vncserver -kill :1 (서버 종료)
+firewall-config (5901, 5902 ... 포트 열기)
+selinux=disabled 설정
+yum -y install tigervnc (리눅스용 클라이언트)
+https://tigervnc.org/ (윈도우용 클라이언트)
+vncviewer <ip:display> (클라이언트 실행)
+
+##MariaDB 설치
+1. 수동설치 : tar.zg 다운로드 후 설치 (독립 구동형임. 서비스 등록 등 필요시 수동으로 진행) -> 인터넷이 안될 경우
+2. 자동설치 : yum repository 설치 (설치파일 방식으로 설치. 자동으로 서비스 등록 등 수행됨)
+ 2.1 yum.mariadb.org 를 통해 필요한 rpm 다운로드 후 설치 -> 인터넷이 안될 경우
+  systemctl start mysql (mariadb 시작)
+  chkconfig mysql on (서비스 상시 기동)
+ 2.1 yum repository 등록을 통한 다운로드 및 설치 -> 인터넷이 가능한 경우
+  systemctl start mariadb (mariadb 시작)
+  systemctl enable mariadb (서비스 상시 기동)
+방화벽 설정 (3306포트)
+mysqladmin -u root password (root 사용자 패스워드 변경)
+mysql -u root -p (root 사용자 접속)
+grant all privilieges on *.* to root@'192.168.44.%' identified by 'root'; (외부에서 접속 허용. 모든 DB, TABLE에 192.168.44 대역 아이피 root 유저 접속 허용)
+
+##오라클 설치
+1. 사전 패키지 설치
+yum -y install http://mirror.centos.org/centos/7/os/x86_64/Packages/compat-libcap1-1.10-7.el7.x86_64.rpm (CentOS 8 에서는 compat-libca1, compat-libstdc++-33 패키지가 제거되어 추가로 설치해야함)
+yum -y install http://mirror.centos.org/centos/7/os/x86_64/Packages/compat-libcap1-1.10-7.el7.x86_64.rpm (CentOS 8 에서는 compat-libca1, compat-libstdc++-33 패키지가 제거되어 추가로 설치해야함)
+yum install -y libnsl
+2. 의존성 패키지 설치
+yum -y localinstall oracle-database-preinstall-18c-1.0-1.el7.x86_64
+3. 설치
+yum -y localinstall oracle-database-xe-18c-1.0-1.x86_64.rpm
+rpm -i --nodigest oracle-database-xe-18c-1.0-1.x86_64.rpm  (yum 설치 중 does not verify: no digest 오류 발생시. 타 PC에서 다운로드 후 해당 PC로 옮길 시 파일 검증 오류로 보임)
+4. 설정
+/etc/init.d/oracle-xe-18c configure
+5. 시작
+/etc/init.d/oracle-xe-18c start/stop/status
+
+
+##yum 미러 사이트
+========================================================
+/etc/yum.repos.d/
+
+[BaseOS]
+name=CentOS-$releasever - Base
+baseurl=https://archive.kernel.org/centos-vault/8.0.1905/BaseOS/x86_64/os/
+	  http://linuxsoft.cern.ch/centos-vault/8.0.1905/BaseOS/x86_64/os/
+gpgcheck=0
+
+[AppStream]
+name=CentOS-$releasever - AppStream
+baseurl=https://archive.kernel.org/centos-vault/8.0.1905/AppStream/x86_64/os/
+	  http://linuxsoft.cern.ch/centos-vault/8.0.1905/AppStream/x86_64/os/
+gpgcheck=0
+
+[extras]
+name=CentOS-$releasever - Extras
+baseurl=https://archive.kernel.org/centos-vault/8.0.1905/extras/x86_64/os/
+	  http://linuxsoft.cern.ch/centos-vault/8.0.1905/extras/x86_64/os/
+gpgcheck=0
+
+[centosplus]
+name=CentOS-$releasever - Plus
+baseurl=https://archive.kernel.org/centos-vault/8.0.1905/centosplus/x86_64/os/
+	  http://linuxsoft.cern.ch/centos-vault/8.0.1905/centosplus/x86_64/os/
+gpgcheck=0
+
+[PowerTools]
+name=CentOS-$releasever - PowerTools
+baseurl=https://archive.kernel.org/centos-vault/8.0.1905/PowerTools/x86_64/os/
+	  http://linuxsoft.cern.ch/centos-vault/8.0.1905/PowerTools/x86_64/os/
+gpgcheck=0

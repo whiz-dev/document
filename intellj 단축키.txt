@@ -1,0 +1,39 @@
+alt + insert : 소스 자동생성 (코드 편집창), 파일추가 (프로젝트 탐색기)
+
+ctrl + alt + enter : 라인 자동 완성
+
+ctrl + alt + v : 리턴값 멤버변수로 자동 생성
+
+ctrl + alt + n : Inline 변경
+
+ctrl + alt + m : 매서드로 추출
+
+ctrl + alt + b : 해당 타입 구현체 찾기
+
+alt + enter : 오류 제안사항
+
+ctrl + shift + t : 테스트 클래스 자동 생성
+
+ctrl + e : 최근 열어본 파일 목록 (최초 이전 탭이 선택됨)
+
+ctrl + o : Overide or Implement 매서드 선택
+
+shift + shift : 찾기
+
+alt + 1 : 프로젝트 창으로 포커스 이동
+esc : 다시 에디터 창으로 포커스 이동
+
+f2 : 오류 위치로 찾아가기
+
+ctrl + / : 라인주석
+ctrl + shift + / : 영역주석
+
+ctrl + d : 현재 라인 복사
+ctrl + y : 현재 라인 삭제
+
+psvm + enter : public static void main 매서드 자동생성
+sout + enter : System.out.println 매서드 자동생성
+soutv + enter : 변수명 출력 자동생성
+soutm + enter : 매서드명 출력 자동생성
+iter + enter : for문 자동 생성
+tostring + enter : ToString() 매서드 자동생성

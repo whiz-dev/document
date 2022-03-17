@@ -1,0 +1,49 @@
+##Chapter1
+node.js 설치 (npm 포함)
+yarn 설치
+VS Code & 언어팩 & 확장 (ESLint, Prettier - Code formatter, Reactjs Code Snippet) 설치
+git 설치
+react 앱 생성
+
+##Chapter2
+JSX
+
+##Chapter3
+컴포넌트 생성
+
+##Chapter8
+useCallback
+리 렌더링 -> deps변경 여부 체크 -> 변경 시 함수를 새로 생성 -> 함수 실행
+useMemo
+
+##Chapter10
+필요 라이브러리 설치
+node-sass, classnames, react-icons
+react-icons : https://react-icons.netlify.com/
+React Developer Tools : 디버깅을 위한 크롬 확장 프로그램
+
+
+yarn create react-app (신규 app 생성)
+yarn start (개발서버 시작)
+yarn add react-virtualized (리액트 가상화 라이브러리 설치)
+yarn build
+
+##Chapter21
+yarn init -y
+yarn add koa
+yarn add --dev eslint (Syntax 검사 도구)
+yarn run eslint --init (.eslintrc.json 파일 생성)
+yarn add eslint-config-prettier (eslint에서 prettier 설정은 변경하지 않음)
+yarn add --dev nodemon (코드 수정 여부 실시간 모니터링)
+yarn add koa-router (라우터 설치)
+yarn add koa-bodyparser (Request Body Json 형식 데이터를 파싱하여 서버에서 사용 가능하게 함)
+f1 + 문서 서식 : 저장 시 자동으로 코드 포맷팅
+
+##Chapter22
+MongoDB 설치 (CLI, GUI 도구 함께 설치됨)
+yarn add mongoose dotenv
+mongoose (nodejs 환경에서 mongoDB 연동을 위한 유틸성 라이브러리. 데이터베이스 문서들을 자바스크립트 객체처럼 사용)
+dotenv (환경변수를 파일에 넣고 사용할수 있게함)
+
+
+
