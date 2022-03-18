@@ -10,6 +10,65 @@ Lombok 플러그인 설치, Annotation Processor 활성화
 gradle 빌드시 한글깨짐 : settings => file encoding => UTF-8 선택
 요청 로그 자동 기록 : application.properties => logging.level.org.apache.coyote.http11=debug
 
+## 로그
+SLF4J : 다양한 로그 라이브러리를 지원하기 위한 인터페이스
+logback : 다양한 로그 라이브러리중 스프링에 내장된 것
+@Slf4j lombok 어노테이션을 통해서도 사용 가능
+
 ## Servlet 작성
 @ServletComponentScan (해당 어노테이션 적용된 클래스의 패키지 하위에 있는 모든 서블릿 객체를 생셩)
 @WebServlet (서블릿 컨테이너에 로드됨)
+
+## 스프링 HandlerMapping
+1. @RequestMapping : @RequestMapping 어노테이션 속성값이 요청 url과 동일한 Handler 반환
+2. BeanNameUrlHandleMapping : Bean 이름이 요청 url과 동일한 Handler 반환
+
+## 스프링 HandlerAdapter
+1. RequestMappingHandlerAdapter : @RequestMapping 사용한 Handler 처리
+2. HttpRequestHandlerAdapter : HttpRequestHandler 인터페이스 상속받은 Handler 처리
+3. SimpleControllerHandlerAdapter : Controller 인터페이스 상속받은 Handler 처리
+
+## 스프링 ViewResolver
+1. BeanNameViewResolver : Bean 이름으로 View를 찾아서 반환
+2. InternalResourceViewResolver : JSP를 처리할 수 있는 뷰를 반환 (application.properties에 Prefix, Suffix 지정)
+3. 그외 다양한 ViewResolver 등록가능 ex) ThymeleafViewResolver
+
+## @Controller
+컴포넌트 스캔으로 스프링 빈 등록 (@Component 상속)
+RequestMappingHandlerMapping 대상
+
+## Controller 매개변수
+ArgumentResolver : 매개변수 변환을 위한 인터페이스를 정의하고 다양한 매개변수값을 변환할 수 있는 구현체를 등록
+HttpServletRequest
+HttpServletResponse
+Model (View에 보낼 데이터 셋팅 시 사용)
+HttpMethod
+Locale
+InputStream
+Reader
+OutputStream
+Writer
+HttpEntity<T>
+RequestEntity<T> (extends HttpEntity<T>)
+@RequestHeader
+@CookieValue
+@PathVariable
+@RequestParam
+@ModelAttribute (RequestParam을 객체 형태로 받는다. 생략가능)
+@RequestBody
+
+## Controller 리턴값
+ReturnValueHandler : 리턴값 변환을 위한 인터페이스를 정의하고 다양한 타입의 리턴값을 변환할 수 있는 구현체를 등록
+ModelView (View에 보낼 데이터 셋팅 시 사용)
+@ResponseBody
+@ResponseStatus
+String (@Controller -> View 논리 이름, @RestController -> ResponseBody, @ResponseBody -> ResponseBody)
+@RestController = @Controller + @ResponseBody + @
+void
+HttpEntity<T>
+ResponseEntity<T> (extends HttpEntity<T>)
+
+## 스프링 기능 확장
+1. ArgumentResolver, ReturnValueHandler, ViewResolver, HttpMessageConverter 등의 인터페이스 구현체를 만든다.
+2. WebMvcConfigurer 를 상속받아 해당 구현체를 스프링에 등록한다.
+
