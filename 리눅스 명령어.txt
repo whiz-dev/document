@@ -3,6 +3,11 @@
 2. 실행창에서  osk를 입력한다.
 3. 화상 키보드에서 NumLock를 클릭해서 끈다.
 
+##방화벽 설정
+firewall-config
+영구적 > public > 포트추가
+옵션 > firewall 다시 불러오기
+
 ##ens160파일 변경사항 적용
 systemctl restart NetworkManager
 
@@ -17,6 +22,14 @@ auth   required   pam_succeed_if.so user != root quiet
 ##한글 키포드 설치
 yum -y install ibus-hangul
 shift + space (한영 전환)
+
+##환경변수 설정
+export key="value"
+사용자 환경변수 : ~/.bash_profile, ~/.bashrc
+시스템 환경변수 : /etc/profile, /etc/bashrc
+환경변수 설정 파일 인식 순서 : /etc/profile -> ~/.bash_profile -> ~/.bashrc -> /etc/bashrc
+변경된 환경변수 파일 바로 적용 : source <파일명>
+환경변수 값 확인 : echo $<환경변수명>
 
 ##콘솔 출력 전체 삭제
 clear

@@ -1,0 +1,28 @@
+##카프카 바이너리 다운로드
+wget https://archive.apache.org/dist/kafka/3.1.0/kafka_2.12-3.1.0.tgz
+tar xvf kafka_2.12-3.1.0.tgz
+
+##환경변수 설정 (카프카 힙 메모리 설정)
+export KAFKA_HEAP_OPTS="-Xmx400m -Xms400m"
+카프카 기동 시 환경 변수값이 있으면 해당 값으로 셋팅. 없으면 기본값 적용
+
+##카프카 서버 설정
+kafka 홈 > config > server.properties
+
+##주키퍼 서버 설정
+kafka 홈 > config > zookeeper.properties
+
+##주키퍼 실행
+bin/zookeeper-server-start.sh -daemon config/zookeeper.properties
+
+##카프카 실행
+bin/kafka-server-start.sh -daemon config/server.properties
+
+##카프카 중지
+bin/kafka-server-stop.sh
+
+##주키퍼 중지
+bin/zookeeper-server-stop.sh
+
+##카프카 연결 확인
+bin/kafka-broker-api-versions.sh
