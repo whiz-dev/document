@@ -1,3 +1,8 @@
+##vmware numlock키 켜짐 꺼짐 반복현상 해결
+1. 윈도우키 + R 키를 누른다.
+2. 실행창에서  osk를 입력한다.
+3. 화상 키보드에서 NumLock를 클릭해서 끈다.
+
 ##ens160파일 변경사항 적용
 systemctl restart NetworkManager
 
