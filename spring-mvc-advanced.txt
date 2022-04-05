@@ -1,6 +1,67 @@
+------- Thymelead 기본 -------
+
 th:text
 [[...]]
 th:utext
 [(...)]
 th:inline
 th:with
+
+#request
+#response
+#session
+#servletContext
+#locale
+param
+session
+@
+
+@{...}
+
+'hello world'
+|hello ${world}|
+
+th:attrappend="class=' large'"
+th:attrprepend="class='large '"
+th:classappend="large"
+
+th:each="user : ${users}"
+th:each="user, userStat : ${users}"
+userStat.index
+userStat.count
+userStat.size
+userStat.even, odd
+userStat.first, last
+userStat.current
+
+th:if
+th:unless
+th:switch
+th:case
+
+<!--           --> : html 표준 주석. 렌더링은 하지않지만 소스에 그대로 남겨둔다.
+<!--/*       */--> : 타임리프 파서 주석. 소스에서 제거한다.
+<!--/*/     /*/--> : 타임리프 프로토타입 주석. 타임리프를 통한 렌더링 시에만 정상 렌더링된다.
+
+th:block (특정 html 묶음 반복시 사용. 실제 렌더링시에는 사라짐)
+
+<script th:inline="javascript"> </script>
+[# th:each="user, stat : ${users}"]
+ var user[[${stat.count}]] = [[${user}]];
+[/]
+
+th:fragment="fragmentName" (템플릿 조각)
+th:fragment="fragmentName (param1, param2)" (매개변수를 받을 수 있는 템플릿 조각)
+th:insert="~{/경로 :: fragmentName}" (하위 태그로 추가)
+th:insert="~{/경로 :: fragmentName ('data1', 'data2')}" (매개변수 넘기기)
+th:insert="~{/경로 :: fragmentName (~{::title}, ~{::link})}" (매개변수로 하위 태그 넘기기)
+th:replace="~{/경로 :: fragmentName}" (해당 태크 Replace)
+
+##Form처리
+th:action
+th:object
+th:field (id, name, value 자동생성)
+th:field=boolean (단일 체크박스)
+th:field=List (멀티 체크박스)
+
+
