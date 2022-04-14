@@ -309,6 +309,8 @@ rpm -i --nodigest oracle-database-xe-18c-1.0-1.x86_64.rpm  (yum 설치 중 does 
 5. 시작
 /etc/init.d/oracle-xe-18c start/stop/status
 
+##기타
+hostnamectl set-hostname <호스트 명> (호스트 명 변경)
 
 ##yum 미러 사이트
 ========================================================

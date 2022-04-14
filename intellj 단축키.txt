@@ -18,7 +18,13 @@ ctrl + e : 최근 열어본 파일 목록 (최초 이전 탭이 선택됨)
 
 ctrl + o : Overide or Implement 매서드 선택
 
+ctrl + p : 매서드 파라미터 정보 보기
+
 shift + shift : 찾기
+
+ctrl + r : replace
+
+crrl + shift + r : replace in file (선택한 폴더 내 모든 파일 Replace)
 
 alt + 1 : 프로젝트 창으로 포커스 이동
 esc : 다시 에디터 창으로 포커스 이동

@@ -64,4 +64,11 @@ th:field (id, name, value 자동생성)
 th:field=boolean (단일 체크박스)
 th:field=List (멀티 체크박스)
 
+스프링부트는 application.properties 에 지정된 파일을 로드해서 MessageSource 인터페이스 객체 생성 후 Bean 등록
+(생략된 경우 messages.properties 가 기본값)
+th:text="#{hello}"
+th:text="#{hello(${item.itemName})}" (인자가 있는 메시지인 경우)
+LocaleResolver (기본선택된 LocaleResolver -> Http Header Accept-Language 를 사용하는 Resolver. Cookie, Session 등 다른 Resolver로 변경가능)
 
+th:errorclass
+th:error
