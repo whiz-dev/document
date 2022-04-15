@@ -4,26 +4,30 @@ NAT
 호스트 전용 어댑터
 https://youtu.be/EVdhT4ImEcY
 
-#zookeeper
+#zookeeper 시작 & 중지
 zkServer.sh start (시작)
 zkServer.sh stop (종료)
 netstat -antp | grep 2181 (시작확인. zookeeper 포트 확인)
 zkCli.sh
 
-#kafka
+#kafka 시작 & 중지
 kafka-server-start.sh $KAFKA/config/server.properties&  (시작. & -> background 실행. daemon으로 실행시 화면에 로그 출력이 안됨)
+kafka-server-start.sh -daemon $KAFKA/config/server.properties (deamon 실행)
 kafka-server-stop.sh (종료)
 netstat -ntlp | grep 9092 (시작확인. kafka 포트 확인)
 cat /usr/local/kafka/logs/server.log (서버로그 확인)
 
 #kafka 기본명령어
 kafka-topics.sh --create --topic kopo-topic --bootstrap-server master:9092,slave1:9092,slave2:9092 –replication-factor 1 --partitions 1 (토픽생성)
-kafka-topics.sh  --bootstrap-server master:9092,slave1:9092,slave2:9092 --alter --topic kopo-topic --partitions 2 (토픽 파티션 갯수 증가)
+kafka-topics.sh --bootstrap-server master:9092,slave1:9092,slave2:9092 --alter --topic kopo-topic --partitions 2 (토픽 파티션 갯수 증가)
 kafka-topics.sh --describe --topic kopo-topic --bootstrap-server master:9092,slave1:9092,slave2:9092 (토픽정보 보기)
+kafka-topics.sh --bootstrap-server master:9092,slave1:9092,slave2:9092 --list (토픽리스트 보기)
 kafka-console-producer.sh --broker-list master:9092,slave1:9092,slave2:9092 --topic kopo-topic (producer 연결)
+kafka-console-producer.sh --broker-list master:9092,slave1:9092,slave2:9092 --topic kopo-topic --property "parse.key=true" --property "key.separator=:" --request-required-acks 1 (Producer 연결. key값도 보내기)
 kafka-console-producer.sh --broker-list master:9092,slave1:9092,slave2:9092 --topic kopo-topic --request-required-acks 1
 (ack:0 -> broker가 받았는지 확인 안함, ack:1 -> 리더 broker가 받았는지 확인, ack:all -> leader, follower brocker 모두가 받았는지 확인)
 kafka-console-consumer.sh --bootstrap-server master:9092,slave1:9092,slave2:9092 --topic kopo-topic --from-beginning (consumer 연결)
+kafka-console-consumer.sh --bootstrap-server master:9092,slave1:9092,slave2:9092 --property print.key=true --property key.separator=":"  --topic javatopic --from-beginning (consumer 연결. key값도 출력)
 kafka-reassign-partitions.sh --bootstrap-server master:9092,slave1:9092,slave2:9092 --reassignment-json-file ./rf.json --execute (replication-factor 변경)
 {"version":1,
 "partitions":[
@@ -35,6 +39,17 @@ kafka-consumer-groups.sh --bootstrap-server master:9092,slave1:9092,slave2:9092 
 #kafka 서버관리
 kafka-configs.sh --bootstrap-server :9092 --entity-type topics --entity-name kopo-topic  --describe --all
 
+#kafka 모니터링
+Kafdrop
+LinkedIn Burrow : 실시간으로 상태 업데이트 가능
+
+#kafka 연동
+telegraf (서버 리소스 모니터링 정보를 kafka로 전송)
+
+#KTable
+KTable은 토픽에서 넘어온 데이터를 별도 테이블에 저장. 동일한 Key는 덮어씀.
+KStream은 토픽에서 데이터가 들어올 경우 KTable에서 동일한 키값을 찾아서 맵핑
+KTable에 키값이 없을 경우 메시지 전송 안함
 
 하나의 파티션은 하나의 컨슈머에만 연결가능
 파티션별로 Leader, Follower 설정 (동일한 토픽내 파티션 별로 Leader, Follower가 다를 수 있음)
