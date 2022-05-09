@@ -4,6 +4,8 @@ ctrl + alt + enter : 라인 자동 완성
 
 ctrl + alt + v : 리턴값 멤버변수로 자동 생성
 
+ctrl + alt + c : 전역변수로 자동 생성
+
 ctrl + alt + n : Inline 변경
 
 ctrl + alt + m : 매서드로 추출
