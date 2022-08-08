@@ -2,6 +2,8 @@ alt + insert : 소스 자동생성 (코드 편집창), 파일추가 (프로젝�
 
 ctrl + alt + enter : 라인 자동 완성
 
+ctrl+shift+v : 클립보드 복사 이력
+
 ctrl + alt + v : 리턴값 멤버변수로 자동 생성
 
 ctrl + alt + c : 전역변수로 자동 생성
